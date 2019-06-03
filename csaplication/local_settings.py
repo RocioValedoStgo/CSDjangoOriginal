@@ -11,9 +11,6 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
-#import django_heroku
-import dj_database_url
-from decouple import config #recurso de heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -23,12 +20,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-#SECRET_KEY = 'sbz=030(p5=ezbhjqua2r^k5*9+%*ro-8()6xlr16sn#k3xcgv'
+SECRET_KEY = 'sbz=030(p5=ezbhjqua2r^k5*9+%*ro-8()6xlr16sn#k3xcgv'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False #Por produccion
+DEBUG = True
 
-ALLOWED_HOSTS = [] #la ULR que da heroku
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -110,16 +107,16 @@ WSGI_APPLICATION = 'csaplication.wsgi.application'
 #     }
 # }
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE' : 'django.db.backends.postgresql_psycopg2',
-#         'NAME' : 'ejemplo_db',
-#         'USER': 'postgres',
-#         'PASSWORD': '1234',
-#         'HOST': 'localhost',
-#         'PORT': '5432'
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE' : 'django.db.backends.postgresql_psycopg2',
+        'NAME' : 'ejemplo_db',
+        'USER': 'postgres',
+        'PASSWORD': '1234',
+        'HOST': 'localhost',
+        'PORT': '5432'
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -161,23 +158,3 @@ STATIC_URL = '/static/'
 
 MEDIA_URL ='/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
-
-try:
-    from csaplication.local_settings import * #el * importa tada la config del archivo
-except ImportError:
-    pass #procedimiento vacio
-
-if not DEBUG:
-    #poner lo de SECRET_KEY SECRET_KEY = 'SECRET_KEY'
-    DATABASES = {
-    'default': {
-        'ENGINE' : 'django.db.backends.postgresql_psycopg2',
-        'NAME' : 'DB_NAME',
-        'USER': 'DB_USER',
-        'PASSWORD': 'DB_PASSWORD',
-        'HOST': 'DB_HOST',
-        'PORT': 'DB_PORT'
-    }
-}
-    import django_heroku
-    django_heroku.settings(locals())
